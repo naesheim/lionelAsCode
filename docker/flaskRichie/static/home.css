@@ -1,0 +1,42 @@
+body {
+  font-family: 'Helvetica Neue'
+  padding-top: 20px;
+  background: orange;
+  text-align: center;
+  padding-left: 20px;
+  color: white;
+}
+p1 {
+  font-size: 30px;
+}
+
+h1 {
+  font-weight: bolder;
+}
+
+.eye {
+  position: r;
+  width: 200px;
+  height: 100px;
+  background: white;
+  border-radius: 100px / 50px;
+}
+
+.iris{
+  margin-left : 50px;
+  margin-top : -30px;
+  width: 100px;
+	height: 100px;
+	background: orange;
+	border-radius: 100px / 100px;
+}
+.pupil{
+  margin-left : 20px;
+  width : 60px;
+  height : 60px;
+  background : white;
+  border-radius : 100px / 100px;
+}
+
+
+

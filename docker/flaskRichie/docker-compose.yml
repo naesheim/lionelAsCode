@@ -1,0 +1,9 @@
+version: '2'
+services:
+  flaskritchie:
+    build: .
+    command: python3 app.py
+    volumes:
+      - .:/code
+    ports:
+      - "8080:5000"
