@@ -2,10 +2,6 @@
 #######################
 #### Variables ########
 #######################
-variable "credentials_path" {
-  default = "~/.config/gcloud/terraform-service-account.json"
-  description = "path to .json file"
-}
 
 variable "cluster_username" {
   type        = "string"
@@ -41,22 +37,21 @@ variable "project_name" {
 #######################
 #### Provider ########
 #######################
-
 provider "google" {
-  credentials = "${file(var.credentials_path)}"
   project = "${var.project_name}"
   region = "${var.region}"
 }
 
-
 #######################
 #### Cluster ########
 #######################
-
 resource "google_container_cluster" "primary" {
   name = "${var.cluster_name}"
   zone = "${var.zone}"
   remove_default_node_pool = true
+  lifecycle {
+    ignore_changes = ["node_pool"]
+  }
 
   node_pool {
     name = "default-pool"
