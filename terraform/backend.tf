@@ -7,6 +7,6 @@ terraform {
     bucket = "naesheim-home-terraform"
     prefix = "cluster/state"
     project = "naesheim-home"
-    credentials = "credentials.json"
+    credentials = "/tmp/credentials.json"
   }
 }
