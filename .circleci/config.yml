@@ -17,7 +17,6 @@ jobs:
               cd terraform
               terraform init
               terraform plan \
-              -var credentials_path=/tmp/credentials.json \
               -var cluster_username=$CLUSTER_USERNAME \
               -var cluster_password=$CLUSTER_PASSWORD
 
@@ -38,25 +37,43 @@ jobs:
               cd terraform
               terraform init
               terraform apply --auto-approve  \
-              -var credentials_path=/tmp/credentials.json \
               -var cluster_username=$CLUSTER_USERNAME \
               -var cluster_password=$CLUSTER_PASSWORD
+
+  #  build-docker-image:
+  #    machine:
+  #      docker_layer_caching: true
+  #    working_directory: ~/repo
+  #    steps:
+  #      - checkout
+  #      - run:
+  #          name: building docker image
+  #          command: |
+  #            cd docker
+  #            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  #            docker build -t naesheim/flaskritcie:${CIRCLE_SHA1:0:9}
+  #            docker push naesheim/flaskritchie:${CIRCLE_SHA1:0:9}
+
 
 workflows:
   version: 2
   clusters-plan-approve-and-deploy:
     jobs:
       - terraform-plan:
-          filters:
-            branches:
-              only:
-                - master
 
       - hold-before-creating-cluster:
           type: approval
+          filters:
+            branches:
+              only:
+                -master
           requires:
             - terraform-plan
 
       - terraform-apply:
           requires:
             - hold-before-creating-cluster
+
+  #    - build-docker-image:
+  #       requires:
+  #         - terraform-apply
