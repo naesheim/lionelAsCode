@@ -48,6 +48,7 @@ provider "google" {
 resource "google_container_cluster" "primary" {
   name = "${var.cluster_name}"
   zone = "${var.zone}"
+  network = "default"
   remove_default_node_pool = true
   lifecycle {
     ignore_changes = ["node_pool"]
